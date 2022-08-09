@@ -62,6 +62,8 @@ if (!$methods) {
   $pattern =  "*.inc";
   $apiPaths = glob($pattern);
   
+  //print_r($apiPaths);
+  
   $eni=0;
   foreach($apiPaths as $apiPath) {
     
@@ -77,15 +79,24 @@ if (!$methods) {
     $matches = []; 
     $regstr = '/namespace\s(?<namespace>[\w\-\\\]+)\;/';
     if (preg_match_all($regstr, $apistr, $matches, PREG_SET_ORDER) !== false) {
-      $env[$eni]['namespace'] = $matches[0]["namespace"];
+      $env[$eni]['namespace'] = (string)$matches[0]["namespace"];
+    } 
+    if (empty($env[$eni]['namespace'])) {
+      $env[$eni]['namespace'] = "-";
     }
 
     // Parsing for the api classname..
     $matches = []; 
     $regstr = '/class\s(?<classname>[\w\-]+)\s/';
     if (preg_match_all($regstr, $apistr, $matches, PREG_SET_ORDER) !== false) {
-      $env[$eni]['classname'] = $matches[0]["classname"];
+      $env[$eni]['classname'] = (string)$matches[0]["classname"];
     }
+    if (empty($env[$eni]['classname'])) {
+      $env[$eni]['classname'] = "-";
+    }
+    
+    //echo("namespace=".$env[$eni]['namespace']."<br>");
+    //echo("classname=".$env[$eni]['classname']."<br>");
     
     $matches = [];
     $regstr = '/(?<func_header>(?<visibility>private|public)?\s?(?<func_modifier>static)?\s?function\s(?<name>\&?[\w\-]{2,25})\((?<param_defs>(?<param_def1>\s?(?<optional_flag1>\?)?(?<param_type1>[a-z]{3,8})?\s?(?<reference_flag1>[\&]{0,1})?(?<param_name1>\$[\w\-]{1,20})\s?(?<default_value1>\=\s?[\w\-\']{1,128})?\s?\,?\s?)?(?<param_def2>\s?(?<optional_flag2>\?)?(?<param_type2>[a-z]{3,8})?\s?(?<reference_flag2>\&)?(?<param_name2>\$[\w\-]{1,20})\s?(?<default_value2>\=\s?[\w\-\']{1,128})?\s?\,?\s?)?(?<param_def3>\s?(?<optional_flag3>\?)?(?<param_type3>[a-z]{3,8})?\s?(?<reference_flag3>\&)?(?<param_name3>\$[\w\-]{1,20})\s?(?<default_value3>\=\s?[\w\-\']{1,128})?\s?\,?\s?)?(?<param_def4>\s?(?<optional_flag4>\?)?(?<param_type4>[a-z]{3,8})?\s?(?<reference_flag4>\&)?(?<param_name4>\$[\w\-]{1,20})\s?(?<default_value4>\=\s?[\w\-\']{1,128})?\s?\,?\s?)?(?<param_def5>\s?(?<optional_flag5>\?)?(?<param_type5>[a-z]{3,8})?\s?(?<reference_flag5>\&)?(?<param_name5>\$[\w\-]{1,20})\s?(?<default_value5>\=\s?[\w\-\']{1,128})?\s?\,?\s?)?)?\)?\:?\s?(?<return_type>[\w\-]{2,25})?)/';
@@ -95,7 +106,7 @@ if (!$methods) {
         
         $method1=[];
       
-        if ($match["visibility"] === "public") {
+        if ($match["visibility"] === "public" || $env[$eni]['namespace'] === "-") {
           //var_dump_ifdebug(true, $match);
                 
           if ($match["param_defs"]!="") {    
@@ -239,12 +250,19 @@ if (isset($methods[$url])) {
 
   $userMethod = $url;
   
-  $cmd = 'return '.$methods[$url]['namespace'].'\\'.$methods[$url]['classname'].'::'.$url.'('; 
+  if ($methods[$url]['namespace']==="-" || $methods[$url]['classname'] ==="-") {
+    $cmd = 'return '.$url.'('; 
+  } else {
+    $cmd = 'return '.$methods[$url]['namespace'].'\\'.$methods[$url]['classname'].'::'.$url.'('; 
+  }
+  
+  //print_r($methods[$url]["params"]);
   
   $i=0;
   foreach($methods[$url]["params"] as $param) {
-    $userParams[$i] = filter_input(INPUT_GET, ltrim($param['name'],'$'));
-    if ($param['type']==="string") {
+    $userParams[$i] = filter_input(INPUT_GET, $param['name'], FILTER_SANITIZE_STRING);
+    //print_r($userParams[$i]);
+    if ($param['type']==="string" && !empty($userParams[$i])) {
       $cmd .= "'$userParams[$i]',";
     } else {
       $cmd .= "$userParams[$i],";
@@ -256,16 +274,18 @@ if (isset($methods[$url])) {
   $cmd .= ");";
   //echo("cmd=$cmd");
   
-  //set_exception_handler('eval_ex_handler');
+  set_exception_handler('eval_ex_handler');
   $ret = eval($cmd);
   echo($ret);
 
 } else if ($url === "XMLDOC") {  
   
   if (!DEBUG) {
-  
-    header("Content-Type: text/xml");
 
+    header("Content-Type: text/xml");
+ 
+    //print_r($env);
+    
     echo('<?xml version="1.0" encoding="utf-8"?>');
     echo('<API>');
     foreach($env as $e) {
@@ -283,7 +303,7 @@ if (isset($methods[$url])) {
           
           $pi=1;
           foreach($m['params'] as $p) {          
-            echo("<PARAM$pi type='".$p['type']."' optional='".$p['optional']."'>".ltrim($p['name'],'$')."</PARAM$pi>"); 
+            echo("<PARAM$pi type='".$p['type']."' optional='".($p['optional']==1?"true":"false")."'>".$p['name']."</PARAM$pi>"); 
             $pi++;
           }  
                     

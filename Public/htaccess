@@ -1,0 +1,12 @@
+Options -MultiViews
+
+RewriteEngine On
+
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Bootstrap
+RewriteRule "^(/)$" "/index.php?url=XMLDOC" [QSA,L]
+RewriteRule "^(.+)$" "/index.php?url=$1" [QSA,L]

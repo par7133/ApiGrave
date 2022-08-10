@@ -11,6 +11,6 @@ Hope you can enjoy it and let us know about any feedback: <a href="mailto:info@a
 	   
 ### Screenshots:
 
-![ApiGrave1](/Publi/res/screenshot1.jpg)  
-![ApiGrave1](/Publi/res/screenshot2.jpg)   
-![ApiGrave1](/Publi/res/screenshot2.jpg)   
+![ApiGrave1](/Public/res/screenshot1.jpg)  
+![ApiGrave1](/Public/res/screenshot2.jpg)   
+![ApiGrave1](/Public/res/screenshot2.jpg)   

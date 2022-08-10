@@ -276,7 +276,11 @@ if (isset($methods[$url])) {
   
   set_exception_handler('eval_ex_handler');
   $ret = eval($cmd);
-  echo($ret);
+  if ($methods[$url]["return_type"]==="bool") {
+    echo(($ret?"true":"false"));
+  } else {  
+    echo($ret);
+  }  
 
 } else if ($url === "XMLDOC") {  
   

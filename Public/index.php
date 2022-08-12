@@ -259,17 +259,42 @@ if (isset($methods[$url])) {
   //print_r($methods[$url]["params"]);
   
   $i=0;
-  foreach($methods[$url]["params"] as $param) {
-    $userParams[$i] = filter_input(INPUT_GET, $param['name'], FILTER_SANITIZE_STRING);
-    //print_r($userParams[$i]);
-    if ($param['type']==="string" && !empty($userParams[$i])) {
-      $cmd .= "'$userParams[$i]',";
-    } else {
-      $cmd .= "$userParams[$i],";
-    }  
-    $i++;
-  }
+  $query_string = filter_input(INPUT_SERVER, "QUERY_STRING");
+  //echo($query_string);
+  //echo(strlen($query_string). ">" . (strlen($url)+5));
+  if (strlen($query_string) > (strlen($url)+5)) {
   
+    foreach($methods[$url]["params"] as $param) {
+      $userParams[$i] = filter_input(INPUT_GET, $param['name'], FILTER_SANITIZE_STRING);
+      //print_r($userParams[$i]);
+      if ($param['type']==="string" && !empty($userParams[$i])) {
+        $cmd .= "'$userParams[$i]',";
+      } else if ($param['type']==="array") {
+
+        if (is_json($userParams[$i])) {
+          // JSON
+          $cmd .= jsontolist($userParams[$i]).",";
+        } else if((left($userParams[$i],1)==="[" || left($userParams[$i],5)==="array") && is_listformat($userParams[$i])) {
+          // LIST OR ARRAY
+          $cmd .= $val.",";
+        } else {  
+          // VALUE => ARRAY
+          if (is_numeric($userParams[$i])) {
+            $val = $userParams[$i];
+          } else {
+            $val = "'".$userParams[$i]."'";
+          }  
+          $val = "[".$val."]";
+          $cmd .= $val.",";
+        }  
+
+      } else {
+        $cmd .= "$userParams[$i],";
+      }  
+      $i++;
+    }
+  }
+    
   $cmd=rtrim($cmd,",");
   $cmd .= ");";
   //echo("cmd=$cmd");

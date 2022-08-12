@@ -204,6 +204,38 @@ function isLatinLang(string $word): bool
   return !$isNonLatinLang;
 }
 
+/*
+ * Check if the given string is specified in json format
+ * 
+ * @param string  $s the string being checked 
+ * @return bool  if $s is in json format, true/false 
+ */
+function is_json(string $s): bool 
+{
+  if (left($s,1)==="{" && right($s,1)==="}" && stripos($s,":")!==false) {
+    return true;    
+  } else {
+    return false;
+  }
+}
+
+/*
+ * Check if the given string is specified in json format
+ * 
+ * @param string  $s the string being checked 
+ * @return bool  if $s is in json format, true/false 
+ */
+function is_listformat(string $s): bool
+{
+  $val = $s;
+  $val = str_replace("'","\'", $val);
+  $val = str_replace('"',"\"", $val);
+  $cmd = "return is_array(".$val.");";
+  $ret = eval($cmd);
+  return $ret;    
+}
+
+
 function json_decode_from_db(string $json, bool $assoc = false) 
 {
   $temp = $json;
@@ -574,6 +606,24 @@ function rtrim_word(string $phrase, array $aWords): string
   }  
   
   return str_cleanphrase($retval);
+}
+
+/*
+ * Convert a string in json format to a list
+ * 
+ * @param string $json the string being converted
+ * @return string the resulting list
+ */
+function jsontolist($json) {
+  
+  $ret = $json;
+  if (left($ret,1) === "{" && right($ret,1) === "}") {
+    $ret = str_replace("{", "[", $ret);    
+    $ret = str_replace("}", "]", $ret);
+    $ret = str_replace(":", "=>", $ret);
+  }
+  return $ret;
+  
 }
 
 /**

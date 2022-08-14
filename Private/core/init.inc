@@ -115,8 +115,14 @@ spl_autoload_register("autoloader", true, true);
 
 define("FUNCTIONS_PATH", __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."functions");
 
-require FUNCTIONS_PATH . DIRECTORY_SEPARATOR . "func.string.inc";
-require FUNCTIONS_PATH . DIRECTORY_SEPARATOR . "func.various.inc";
+//require FUNCTIONS_PATH . DIRECTORY_SEPARATOR . "func.string.inc";
+//require FUNCTIONS_PATH . DIRECTORY_SEPARATOR . "func.various.inc";
+
+$pattern = FUNCTIONS_PATH . DIRECTORY_SEPARATOR . "*.inc";
+$aFuncPaths = glob($pattern);
+foreach($aFuncPaths as $funcPath) {
+  require FUNCTIONS_PATH . DIRECTORY_SEPARATOR . basename($funcPath);
+}
 
 // ERROR HANDLING AND LOGGING
 

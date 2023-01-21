@@ -49,6 +49,10 @@ body {
   font-weight: 900;
   color:#000000;
 }
+.bbb {
+  color: #7bca2e;
+  text-decoration: underline;
+}
 #butParent {
   position:absolute; 
   top:20px; 
@@ -117,6 +121,30 @@ body {
   font-weight: 400;
   text-align: right; 
   z-index: 99999;
+}
+#originsDisplay {
+  float:left;
+  position:fixed;
+  top:680px;
+  left:20px;
+  width:275px;
+  height:120px;
+  font-family: Monospace, Verdana, Serif;
+  font-size: 14px;
+  background-color: #020401;
+  border: 3px solid lightgray;
+  text-align:left;
+  color: #FFFFFF;
+  white-space:nowrap; 
+  font-weight:900;
+  padding:10px;
+  padding-top:4px;
+  z-index:99999;
+  display:none;
+}
+.originLabel {
+  color: #7bca2e;
+  font-weight:900;
 }
 .welcome {
   color: orange;

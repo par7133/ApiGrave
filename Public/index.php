@@ -223,7 +223,9 @@ $cache->setJ($cacheKey, $methods, 0, CACHE_EXPIRE);
 
 // PARAMETERS VALIDATION
 
-$url = trim(substr(filter_input(INPUT_GET, "url", FILTER_SANITIZE_STRING), 0, 300), "/");
+$url = filter_input(INPUT_GET, "url")??"";
+$url = strip_tags($url);
+$url = trim(substr($url, 0, 300), "/");
 
 /*
 switch ($url) {
@@ -265,7 +267,7 @@ if (isset($methods[$url])) {
   if (strlen($query_string) > (strlen($url)+5)) {
   
     foreach($methods[$url]["params"] as $param) {
-      $userParams[$i] = filter_input(INPUT_GET, $param['name'], FILTER_SANITIZE_STRING);
+      $userParams[$i] = strip_tags(filter_input(INPUT_GET, $param['name'])??"");
       //print_r($userParams[$i]);
       if ($param['type']==="string" && !empty($userParams[$i])) {
         $cmd .= "'$userParams[$i]',";

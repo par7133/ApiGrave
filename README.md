@@ -10,7 +10,7 @@ Api Grave is a light, simple, software on premise for "burying" your api online.
 	   
 Api Grave is released under GPLv3 license, it is supplied AS-IS and we do not take any responsibility for its misusage.<br>	
      
-Hope you can enjoy it and let us know about any feedback: <a href="mailto:my25mb@aol.com" style="color:#e6d236;">my25mb@aol.com</a>
+Hope you can enjoy it and let us know about any feedback: <a href="mailto:posta@elettronica.lol" style="color:#e6d236;">posta@elettronica.lol</a>
 	   
 ### Screenshots:
 

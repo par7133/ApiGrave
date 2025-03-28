@@ -1,5 +1,5 @@
 <div style="width:500px; margin:auto; margin-top:0px; position:relative; top:-10px;">
-<H1><a href="http://5mode.net/l/dona1" targt="_blank">&gt;&gt;&nbsp;Donate to CC&nbsp;&lt;&lt;</a></H1>
+<H1><a href="http://gaox.io/l/dona1" targt="_blank">&gt;&gt;&nbsp;Donate to Dan&nbsp;&lt;&lt;</a></H1>
 </div> 
 <h1>Api Grave</h1>
 Your api, our  grave. Let's wrap your php api online with ease..  <br><br>
@@ -16,4 +16,4 @@ Api Grave is released under GPLv3 license, it is supplied AS-IS and we do not ta
 ![ApiGrave2](/Public/res/screenshot2.jpg)   
 ![ApiGrave3](/Public/res/screenshot3.jpg)   
 
-Feedback: <a href="mailto:posta@elettronica.lol" style="color:#e6d236;">posta@elettronica.lol</a>
+Feedback: <a href="mailto:code@gaox.io" style="color:#e6d236;">code@gaox.io</a>

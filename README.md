@@ -1,5 +1,5 @@
 <div style="width:500px; margin:auto; margin-top:0px; position:relative; top:-10px;">
-<H1><a href="http://gaox.io/l/dona1" targt="_blank">&gt;&gt;&nbsp;Donate to Dan&nbsp;&lt;&lt;</a></H1>
+<H1><a href="http://gaox.io/l/dona1" targt="_blank">&gt;&gt;&nbsp;Donate to 5 Mode&nbsp;&lt;&lt;</a></H1>
 </div> 
 <h1>Api Grave</h1>
 Your api, our  grave. Let's wrap your php api online with ease..  <br><br>

@@ -34,7 +34,7 @@ define('APP_TITLE', "Api Grave, your api our grave..");
 
 define('APP_SPLASH', true);
 
-define('APP_HOST', "yourapigrave.com");
+define('APP_HOST', "yoursitename.xyz");
 define('APP_PATH', "var/www/YourApiGrave/Public");
 define('APP_ERROR_PATH', "var/www/YourApiGrave/Private/error");
 define('APP_API_PATH', "var/www/YourApiGrave/Private/api");
@@ -55,7 +55,7 @@ $CONFIG = [
       'NAME' => "Api Grave",
       'TITLE' => "Api Grave, your api our grave..", 
       'SPLASH' => true,
-      'HOST' => "yourapigrave.com", 
+      'HOST' => "yoursitename.xyz", 
       'PATH' => "/var/www/YourApiGrave/Public",
       'ERROR_PATH' => "/var/www/YourApiGrave/Private/error",
       'API_PATH' => "/var/www/YourApiGrave/Private/api",

@@ -1,12 +1,11 @@
 # INSTALLATION
    
-  Installing ApiGrave is more straightforward than what it could appear..   
+  Installing this web app is more straightforward than what it could appear.
   
-  First, if you use Nginx as reversed proxy just point the root of your web app to /path/to/YourApigrave/Public   
+  First, if you use Nginx as reversed proxy just point the root of your web app to /path/to/YourWebApp/Public/static  
   where the public content is located:
   
   <ol>  
-  <li>The static content hosted should be just of this kind: html, css, js, png, jpg, jpeg, gif, fonts, map, ico</li>   
   <li>Example of Nginx minimal configuration:
      
       server {   
@@ -14,12 +13,10 @@
         listen 80;
         listen [::]:80;
     
-        server_name api.yourapigrave.com;
+        server_name yourservername.xyz;
      
-        root /var/www/YourApiGrave/Public;
+        root /path/to/YourWebApp/Public/static;
         index index.php; 
-       
-        rewrite ^(/)$ /index.php?url=XMLDOC;
        
         location / {     
            
@@ -55,6 +52,6 @@
   </li>
   </ol>  
   
-  Apache instead should have DocumentRoot pointing to /path/to/YourApiGrave/Public .   
+  Apache instead should have DocumentRoot pointing to /path/to/YourWebApp/Public .   
   
   Dan
